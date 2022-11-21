@@ -1,0 +1,17 @@
+{
+  "name": "sonar",
+  "version": "1.0.0-alpha.1",
+  "description": "search and replace tools",
+  "main": "index.js",
+  "repository": "https://github.com/abelpz/sonar.git",
+  "author": "Abel Perez <abelper54@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "./packages/*",
+    "./apps/*"
+  ],
+  "devDependencies": {
+    "nx": "14.8.6"
+  }
+}
