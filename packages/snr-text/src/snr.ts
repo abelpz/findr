@@ -54,10 +54,6 @@ interface SnrResult {
   metadata: metadata;
 }
 
-interface Iterable<T> {
-  [Symbol.iterator](): Iterator<T>;
-}
-
 export function snr(params: SnrParams) {
   const {
     target,
