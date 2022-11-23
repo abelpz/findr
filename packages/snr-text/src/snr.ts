@@ -134,7 +134,7 @@ export function snr(params: SnrParams) {
         return shouldTransform ? matchCase(replacement) : replacement;
       }
       throw new Error(
-        "Replacement string should be of type string or function."
+        "Replacement param should be of type string or function."
       );
     };
 
