@@ -1,7 +1,13 @@
 import { FindrParams, FindrResult, resultKey } from "./findr.d";
 
-import xre from "xregexp";
-import { escapeRegExp, evalRegex, isUpperCase, prepareRegExp } from "./utils";
+import {
+  escapeRegExp,
+  evalRegex,
+  isUpperCase,
+  prepareRegExp,
+  regexer,
+  UppercaseLetter,
+} from "./utils";
 
 export function findr({
   source,
@@ -36,7 +42,7 @@ export function findr({
     ? [...new Set([...rgxData.flags, ...defaultFlags])]
     : defaultFlags;
 
-  const finalRgx = xre(rgxData.source, flags.join(""));
+  const finalRgx = regexer(rgxData.source, flags.join(""));
 
   const initialRgx = prepareRegExp({
     regexp: finalRgx,
@@ -85,7 +91,7 @@ export function findr({
       if (isUpperCase(match)) {
         return replaced.toUpperCase();
       }
-      if (xre.test(match[0], xre("\\p{Uppercase_Letter}"))) {
+      if (new RegExp(regexer(UppercaseLetter)).test(match[0])) {
         return replaced[0].toUpperCase() + replaced.slice(1);
       }
       return replaced;

@@ -13,6 +13,11 @@
   "peerDependencies": {
     "xregexp": "^5.1.1"
   },
+  "peerDependenciesMeta": {
+    "xregexp": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "xregexp": "^5.1.1",
     "typescript": "^4.6.4",

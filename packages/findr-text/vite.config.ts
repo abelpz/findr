@@ -8,6 +8,14 @@ export default defineConfig({
       name: "findr",
       fileName: (format) => `@findr/text.${format}.js`,
     },
+    rollupOptions: {
+      external: ["xregexp"],
+      output: {
+        globals: {
+          xregexp: "xre",
+        },
+      },
+    },
     sourcemap: true,
   },
 });
