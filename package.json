@@ -1,5 +1,5 @@
 {
-  "name": "sonar",
+  "name": "findr",
   "version": "1.0.0-alpha.1",
   "description": "search and replace tools",
   "main": "index.js",
