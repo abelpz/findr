@@ -1,6 +1,6 @@
 {
   "name": "@findr/text",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "private": false,
   "type": "module",
   "repository": "https://github.com/abelpz/findr.git",
@@ -27,12 +27,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/@finder/text.umd.js",
-  "module": "./dist/@finder/text.es.js",
+  "main": "./dist/@findr/text.umd.js",
+  "module": "./dist/@findr/text.es.js",
   "exports": {
     ".": {
-      "import": "./dist/@finder/text.es.js",
-      "require": "./dist/@finder/text.umd.js"
+      "import": "./dist/@findr/text.es.js",
+      "require": "./dist/@findr/text.umd.js"
     }
   }
 }
