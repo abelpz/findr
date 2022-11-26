@@ -1,73 +1,9 @@
-// TODO: Split code into different files
+import { FindrParams, FindrResult, resultKey } from "./findr.d";
 
 import xre from "xregexp";
-import { isUpperCase } from "./utils";
+import { escapeRegExp, evalRegex, isUpperCase, prepareRegExp } from "./utils";
 
-function prepareRegExp({
-  regexp,
-  isWordMatched,
-}: {
-  regexp: RegExp;
-  isWordMatched: boolean;
-}) {
-  const { source, flags } = regexp;
-  return isWordMatched
-    ? xre(
-        `(^|[^\\p{Letter}\\p{Number}])(${source})(?=[^\\p{Letter}\\p{Number}]|$)`,
-        flags
-      )
-    : xre(`()(${source})`, flags);
-}
-
-function escapeRegExp(string: string | RegExp) {
-  const _string = string instanceof RegExp ? string.source : string;
-  return _string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function evalRegex(source: string | RegExp) {
-  if (source instanceof RegExp) return source;
-  if (typeof source !== "string")
-    throw new Error("Arg `source` shoud be of type string or RegExp");
-  const results = source.match(/\/(.+)\/(?=(\w*$))/);
-  if (!results?.[1]) return { source };
-  return { source: results[1], flags: results[2] };
-}
-
-export interface SnrConfig {
-  // TODO: Add config to make use of xregexp optional
-  ctxLen?: number;
-  /** function for wrapping or transforming the matched word in context.*/
-  filterCtxMatch?: (match: string) => string;
-  /** function for wrapping or transforming the replacement word in context.*/
-  filterCtxReplacement?: (replacement: string) => string;
-  buildResultKey?: (index: number) => resultKey;
-  isRegex?: boolean;
-  isCaseMatched?: boolean;
-  isWordMatched?: boolean;
-  isCasePreserved?: boolean;
-}
-
-export type resultKey = string | number;
-export type metadata = { [key: string]: unknown };
-
-export interface SnrParams {
-  source: string;
-  target: string | RegExp;
-  replacement?: string | Function;
-  contextLength?: number;
-  replacementKeys?: Array<resultKey> | string;
-  metadata?: metadata;
-  config: SnrConfig;
-}
-
-export interface SnrResult {
-  context: string;
-  resultKey: resultKey;
-  metadata: metadata;
-  source: string;
-}
-
-export function snr({
+export function findr({
   source,
   target,
   replacement = "",
@@ -83,7 +19,7 @@ export function snr({
     isWordMatched = false,
     isCasePreserved = false,
   },
-}: SnrParams) {
+}: FindrParams) {
   const defaultFlags = ["g"];
 
   if (!isCaseMatched) defaultFlags.push("i");
@@ -109,7 +45,7 @@ export function snr({
 
   let searchIndex = 0;
   let replaceIndex = 0;
-  let results: SnrResult[] = [];
+  let results: FindrResult[] = [];
 
   const replaced = source.replace(initialRgx, function (...args) {
     const containsGroup = typeof args[args.length - 1] === "object";
@@ -201,41 +137,4 @@ export function snr({
     return tmpMatch;
   });
   return { results, replaced };
-}
-
-export interface SnrMultiLineConfig extends Omit<SnrConfig, "buildResultKey"> {
-  buildResultKey?: (index: number, lineNumber: number) => resultKey;
-}
-
-export interface SnrMultiLineParams extends Omit<SnrParams, "config"> {
-  config?: SnrMultiLineConfig;
-}
-
-export function snrMultiLine(params: SnrMultiLineParams) {
-  const { source, metadata, config = {} } = params;
-  const { buildResultKey } = config;
-  const _source = source.split("\n");
-  let _results: SnrResult[] = [];
-  let _replaced: string[] = [];
-  _source.forEach((line, lineIndex) => {
-    const lineNumber = lineIndex + 1;
-    const _buildResultKey = buildResultKey
-      ? (index: number) => buildResultKey(index, lineNumber)
-      : (index: number) => _results.length + index;
-    const _metadata = { ...metadata, lineNumber };
-    const { results, replaced } = snr({
-      ...params,
-      metadata: _metadata,
-      source: line,
-      config: { ...config, buildResultKey: _buildResultKey },
-    });
-    if (results.length) {
-      _results = _results.concat(results);
-    }
-    _replaced.push(replaced);
-  });
-  return {
-    results: _results,
-    replaced: _replaced.join("\n"),
-  };
 }
