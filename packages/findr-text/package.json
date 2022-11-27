@@ -1,6 +1,6 @@
 {
   "name": "@findr/text",
-  "version": "1.0.1-0",
+  "version": "1.0.0-alpha.8",
   "private": false,
   "type": "module",
   "repository": "https://github.com/abelpz/findr.git",
