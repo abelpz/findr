@@ -1,12 +1,14 @@
 {
   "name": "@findr/text",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-alpha.10",
   "private": false,
   "type": "module",
   "repository": "https://github.com/abelpz/findr.git",
   "author": "Abel Perez <abelper54@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prealpha": "yarn publish --tag=alpha --prerelease --preid=alpha",
+    "prebeta": "yarn publish --tag=beta --prerelease --preid=beta",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
