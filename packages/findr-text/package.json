@@ -1,6 +1,6 @@
 {
   "name": "@findr/text",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "private": false,
   "type": "module",
   "repository": "https://github.com/abelpz/findr.git",
@@ -29,16 +29,16 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/@findr/fnr.cjs.js",
-  "module": "./dist/@findr/fnr.es.js",
+  "main": "./dist/@findr/text/fnr.cjs.js",
+  "module": "./dist/@findr/text/fnr.es.js",
   "exports": {
     ".": {
-      "import": "./dist/@findr/fnr.es.js",
-      "require": "./dist/@findr/fnr.cjs.js"
+      "import": "./dist/@findr/text/fnr.es.js",
+      "require": "./dist/@findr/text/fnr.cjs.js"
     },
     "./multiline": {
-      "import": "./dist/@findr/multiline.es.js",
-      "require": "./dist/@findr/multiline.cjs.js"
+      "import": "./dist/@findr/text/multiline.es.js",
+      "require": "./dist/@findr/text/multiline.cjs.js"
     }
   }
 }
