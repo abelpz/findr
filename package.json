@@ -1,7 +1,7 @@
 {
   "name": "findr",
   "version": "1.0.0-alpha.1",
-  "description": "search and replace tools",
+  "description": "find and replace tools",
   "main": "index.js",
   "repository": "https://github.com/abelpz/sonar.git",
   "author": "Abel Perez <abelper54@gmail.com>",
