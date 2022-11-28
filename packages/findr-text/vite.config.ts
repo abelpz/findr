@@ -4,9 +4,13 @@ import path from "node:path";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "findr",
-      fileName: (format) => `@findr/text.${format}.js`,
+      entry: {
+        fnr: path.resolve(__dirname, "src/index.ts"),
+        multiline: path.resolve(__dirname, "src/multiline/index.ts"),
+      },
+      name: "Findr",
+      formats: ["es", "cjs"],
+      fileName: (format, entryName) => `@findr/text/${entryName}.${format}.js`,
     },
     rollupOptions: {
       external: ["xregexp"],

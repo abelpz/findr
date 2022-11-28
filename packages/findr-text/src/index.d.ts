@@ -6,6 +6,7 @@ export interface FindrConfig {
   /** function for wrapping or transforming the replacement word in context.*/
   filterCtxReplacement?: (replacement: string) => string;
   buildResultKey?: (index: number) => resultKey;
+  xregexp?: Function;
   isRegex?: boolean;
   isCaseMatched?: boolean;
   isWordMatched?: boolean;

@@ -1,29 +1,3 @@
-import xre from "xregexp";
-
-const isXre = xre instanceof Function;
-
-export const regexer = isXre
-  ? xre
-  : function (source: string, flags: string = "") {
-      return new RegExp(source, flags);
-    };
-
-export const WordLike = isXre ? `p{Letter}\\p{Number}` : `\\w\\d`;
-export const UppercaseLetter = isXre ? `\\p{Uppercase_Letter}` : `[A-Z]`;
-
-export function prepareRegExp({
-  regexp,
-  isWordMatched,
-}: {
-  regexp: RegExp;
-  isWordMatched: boolean;
-}) {
-  const { source, flags } = regexp;
-  return isWordMatched
-    ? regexer(`(^|[^${WordLike}])(${source})(?=[^${WordLike}]|$)`, flags)
-    : regexer(`()(${source})`, flags);
-}
-
 export function escapeRegExp(string: string | RegExp) {
   const _string = string instanceof RegExp ? string.source : string;
   return _string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

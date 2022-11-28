@@ -1,4 +1,4 @@
-import { FindrConfig, resultKey, FindrParams } from "./findr.d";
+import { FindrConfig, resultKey, FindrParams } from "../findr";
 
 export interface FindrMultiLineConfig
   extends Omit<FindrConfig, "buildResultKey"> {

@@ -1,23 +1,24 @@
-import { findr } from "./findr";
-import { FindrResult } from "./findr.d";
-import { FindrMultiLineParams } from "./multiline.d";
+import fnr from "../.";
+import { FindrResult } from "../index.d";
+import { FindrMultiLineParams } from "./index.d";
 
-export function findrMultiLine(params: FindrMultiLineParams) {
-  const { source, metadata, config = {} } = params;
+export default function fnrMultiLine(params: FindrMultiLineParams) {
+  const { source, metadata, config = {}, target } = params;
   const { buildResultKey } = config;
   const _source = source.split("\n");
   let _results: FindrResult[] = [];
   let _replaced: string[] = [];
-  _source.forEach((line, lineIndex) => {
+  _source.forEach((line: string, lineIndex: number) => {
     const lineNumber = lineIndex + 1;
     const _buildResultKey = buildResultKey
       ? (index: number) => buildResultKey(index, lineNumber)
       : (index: number) => _results.length + index;
     const _metadata = { ...metadata, lineNumber };
-    const { results, replaced } = findr({
+    const { results, replaced } = fnr({
       ...params,
-      metadata: _metadata,
       source: line,
+      target,
+      metadata: _metadata,
       config: { ...config, buildResultKey: _buildResultKey },
     });
     if (results.length) {
