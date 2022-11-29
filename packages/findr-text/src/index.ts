@@ -8,8 +8,8 @@ export default function fnr({
   replacementKeys = [],
   metadata,
   config: {
-    filterCtxMatch = (match: string) => `[-${match}]`,
-    filterCtxReplacement = (replacement: string) => `[+${replacement}]`,
+    filterCtxMatch = (match: string) => match,
+    filterCtxReplacement = (replacement: string) => replacement,
     buildResultKey,
     ctxLen = 0,
     xregexp: xre,
@@ -147,11 +147,14 @@ export default function fnr({
     const result = {
       context: ctxBefore + ctxMatch + ctxtReplacement + ctxAfter,
       extContext: extCtxBefore + ctxMatch + ctxtReplacement + extCtxAfter,
-      source: source,
       resultKey: searchPointer,
       metadata: {
+        source: source,
         match: match,
         searchIndex,
+        position: pos,
+        groups: args,
+        namedGroups,
         ...metadata,
       },
     };

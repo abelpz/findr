@@ -31,5 +31,4 @@ export interface FindrResult {
   extContext: string;
   resultKey: resultKey;
   metadata: metadata;
-  source: string;
 }
