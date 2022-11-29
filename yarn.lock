@@ -378,6 +378,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.15.13.tgz#64e8825bf0ce769dac94ee39d92ebe6272020dfc"
   integrity sha512-+BoyIm4I8uJmH/QDIH0fu7MG0AEx9OXEDXnqptXCwKOlOqZiS4iraH1Nr7/ObLMokW3sOCeBNyD68ATcV9b9Ag==
 
+"@findr/text@1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@findr/text/-/text-1.0.0-alpha.10.tgz#f0a9ac1e0b99dc99114b1fc2302d21b0c68a124e"
+  integrity sha512-kX1aAACICVS2pzJnq8cPsKbyiHSSHO0+Z6XlWHJi+1UpCKuehIwXcAAdGheBnDdEpAVRre/hcQ2Rg8lwd3BNrw==
+
 "@jest/expect-utils@^29.3.1":
   version "29.3.1"
   resolved "https://registry.yarnpkg.com/@jest/expect-utils/-/expect-utils-29.3.1.tgz#531f737039e9b9e27c42449798acb5bba01935b6"

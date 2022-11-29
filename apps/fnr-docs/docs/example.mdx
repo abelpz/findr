@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+---
+
+# Walk through
+
+**findr-text** is the base module for finding a substring on a given source. It can simply return the strings with the results and their position in source.
+
+<CH.Scrollycoding preset="https://codesandbox.io/s/findr-text-c9juk6" start={1}>
+
+## 1. Add some dummy text
+
+First lets add some dummy source to search on:
+
+> Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.
+
+```jsx example.js focus=4:5
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.";
+
+  const params = {
+    source: txt,
+    target: "do",
+  };
+  return fnr(params);
+}
+```
+
+---
+
+### Ipsum
+
+Lorem ipsum dolor sit amet, consectetur adipiscing something about points, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+```jsx example.js
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.";
+
+  const params = {
+    source: txt,
+    target: "do",
+  };
+  return fnr(params);
+}
+```
+
+</CH.Scrollycoding>
