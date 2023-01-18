@@ -137,16 +137,20 @@ export default function fnr({
     const extCtxAfter = source.slice(pos + match.length, -1);
 
     const ctxMatch = filterCtxMatch ? filterCtxMatch(match) : match;
-    const ctxtReplacement = filterCtxReplacement
+    const ctxReplacement = filterCtxReplacement
       ? filterCtxReplacement(replaced)
       : replaced;
 
     const searchPointer = buildResultKey
       ? buildResultKey(searchIndex)
       : searchIndex;
+
+    //TODO: add result metadata as filterCtxReplacement arg
     const result = {
-      context: ctxBefore + ctxMatch + ctxtReplacement + ctxAfter,
-      extContext: extCtxBefore + ctxMatch + ctxtReplacement + extCtxAfter,
+      match: ctxMatch,
+      replacement: ctxReplacement,
+      context: { before: ctxBefore, after: ctxAfter },
+      extContext: { before: extCtxBefore, after: extCtxAfter },
       resultKey: searchPointer,
       metadata: {
         source: source,

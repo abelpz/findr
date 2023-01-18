@@ -26,9 +26,16 @@ export interface FindrParams {
   config: FindrConfig;
 }
 
+export interface Context {
+  before: string;
+  after: string;
+}
+
 export interface FindrResult {
-  context: string;
-  extContext: string;
+  match: string;
+  replacement: string;
+  context: Context;
+  extContext: Context;
   resultKey: resultKey;
   metadata: metadata;
 }
