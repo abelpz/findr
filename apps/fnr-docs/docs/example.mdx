@@ -2,52 +2,382 @@
 sidebar_position: 1
 ---
 
-# Walk through
+# @findr/text
 
-**findr-text** is the base module for finding a substring on a given source. It can simply return the strings with the results and their position in source.
+@findr/text is the core package for all @findr derived packages, it allows powerfull replacement of plain text. It can be used by libraries to enable searching over all sort of formats like Markdown, USFM, HTML, etc.
 
-<CH.Scrollycoding preset="https://codesandbox.io/s/findr-text-c9juk6" start={1}>
+## Installation
 
-## 1. Add some dummy text
+@findr/text is available as a npm package, install it by running any of the following commands on your terminal:
 
-First lets add some dummy source to search on:
+<CH.Section>
 
-> Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.
+### npm
 
-```jsx example.js focus=4:5
-import fnr from "@findr/text";
+```ssh
+npm install @findr/text
+```
 
+### yarn
+
+```ssh
+yarn add @findr/text
+```
+
+### pnpm
+
+```ssh
+pnpm add @findr/text
+```
+
+</CH.Section>
+
+## Walk through
+
+**findr-text** is the core module for finding a substring in a given plain-text source. Let's walk through the basics.
+
+<CH.Scrollycoding preset="https://codesandbox.io/s/findr-text-c9juk6" start={1} wordWrap={true} lineNumbers={true}>
+
+The following steps show how to use findr from very basic to more advanced use. While you move forward through the steps the code preview and the UI preview will change, feel free to explore and try to interact with all of it.
+
+For this example we will start with an example function that will be used by our UI to render the results of findr.
+
+```jsx example.js
+export default function example() {}
+```
+
+---
+
+### 1. Add some dummy text
+
+First lets add some dummy source text to search on.
+
+```jsx example.js focus=2:3
 export default function example() {
   const txt =
-    "Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.";
-
-  const params = {
-    source: txt,
-    target: "do",
-  };
-  return fnr(params);
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
 }
 ```
 
 ---
 
-### Ipsum
+### 2. Add findr
 
-Lorem ipsum dolor sit amet, consectetur adipiscing something about points, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Now let's add findr in the mix
 
-```jsx example.js
+```jsx example.js focus=1
 import fnr from "@findr/text";
 
 export default function example() {
   const txt =
-    "Consequat officia nisi nostrud ea nisi. Ullamco consequat velit consectetur ea velit sunt exercitation. Ipsum in labore magna dolor. Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat quis ut incididunt proident nisi velit exercitation.";
-
-  const params = {
-    source: txt,
-    target: "do",
-  };
-  return fnr(params);
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
 }
 ```
+
+---
+
+### 3. Let's use findr
+
+Finally, let's use finder and pass in some props. You should now get some results.
+
+```jsx example.js focus=7:10
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+  });
+}
+```
+
+---
+
+As you can see we already have some results, take a look at the results. Now we need to get some context, let's do that.
+
+---
+
+### 4. Getting some context
+
+Pass in a config prop to fnr. `ctxLen` will tell fnr how much context we want to get around our matched result.
+
+```jsx example.js focus=10:12
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    config: {
+      ctxLen: 20,
+    },
+  });
+}
+```
+
+---
+
+Oh, looks like some words sneaked into our results. We only wanted the word "nostrud" not words that contained it.
+
+---
+
+### 5. Selecting only whole words
+
+Let's pass the `isWordMatched` config param to fnr.
+
+```jsx example.js focus=12
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+    },
+  });
+}
+```
+
+---
+
+Now we have the right results, but these are matching the casing of our target, we also want to find words that have different casing.
+
+---
+
+### 6. Making a case sensitive search
+
+Let's use the `isCaseMatched` config param.
+
+```jsx example.js focus=13
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+    },
+  });
+}
+```
+
+---
+
+We found two more words, now we can replace them.
+
+---
+
+### 7. Replacing
+
+Let's add a replacement string.
+
+```jsx example.js focus=10
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    replacement: "my new word",
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+    },
+  });
+}
+```
+
+---
+
+Our UI shows us a preview of how these replacement strings will look like. As you can see, even when the word found starts with an uppercase letter, the replacement result starts with the same case as our replacement input, so let's add a new configuration parameter.
+
+---
+
+### 8. Preserving casing
+
+Let's add the `isCasePreserved` config param.
+
+```jsx example.js focus=15
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    replacement: "my new word",
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+      isCasePreserved: true,
+    },
+  });
+}
+```
+
+---
+
+Now if our match starts with uppercase, the replacement string will also start with uppercase.
+So far we have not replaced anything, for that we need to pass to findr the list of results we want to replace.
+
+---
+
+### 9. Actually replacing
+
+If you pass `replacementKeys` to fnr it will replace those results and return a `replaced` string which contains the whole source string with changes applied to it.
+
+```jsx example.js focus=11
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    replacement: "my new word",
+    replacementKeys: [0],
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+      isCasePreserved: true,
+    },
+  });
+}
+```
+
+---
+
+You can see our list of results got smaller, after passing the `resultKeys` fnr will return a new list of results, and a new replaced source which you see in the UI by clicking the Replaced tab. Now let's replace all.
+
+---
+
+### 10. Replace all
+
+`replacementKeys` also accepts a string with a value of "all", let's change it to that.
+
+```jsx example.js focus=11
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "nostrud",
+    replacement: "my new word",
+    replacementKeys: "all",
+    config: {
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+      isCasePreserved: true,
+    },
+  });
+}
+```
+
+---
+
+You can see now we are getting 0 results. And the replaced tab contains a new source with all our newly replaced content.
+Now let's go back to our original source and say we wanted to replace all text that is enclosed by the « » characters. For that let's use RegEx.
+
+---
+
+### 11. Supporting RegEx
+
+Let's add a the `isRegex` config param, and add some RegEx to our `target` param.
+
+```jsx example.js focus=9,12
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "«.+?»",
+    replacement: "my new word",
+    config: {
+      isRegex: true,
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+      isCasePreserved: true,
+    },
+  });
+}
+```
+
+---
+
+Excellent, we've now found all text that is surrounded by `«` and `»`, let's say we wanted to keep that inner text but remove the surrounding characters, for that let's use replacement patterns, and change our target prop a little to store the part we want to keep.
+
+---
+
+### 12. Using replacement patterns
+
+We surrounded with parentheses the part of the Regex we want to store, and then for the prop replacement we changed it to `$1` ro refer to the first (and only) stored part of the Regex.
+
+```jsx example.js focus=9:10
+import fnr from "@findr/text";
+
+export default function example() {
+  const txt =
+    "Consequat officia nisi «nostrud» ea nisi. «Ullamco consequat» velit consectetur ea velit sunt exercitation. Ipsum in minostrud «magna dolor». Do aliquip do minim excepteur pariatur excepteur qui. Consectetur dolore magna id elit. Nostrud officia sint pariatur nisi deserunt. Labore sunt est dolor fugiat nostrudquis ut incididunt proident nisi velit exercitation. Nostrud deserunt!";
+
+  return fnr({
+    source: txt,
+    target: "«(.+?)»",
+    replacement: "$1",
+    config: {
+      isRegex: true,
+      ctxLen: 20,
+      isWordMatched: true,
+      isCaseMatched: false,
+      isCasePreserved: true,
+    },
+  });
+}
+```
+
+---
+
+Great! Fnr stored every string that matched the Regex expression in parentheses and we were able to access that by using `$1`.
+
+---
+
+This covers all the basic features and a little more . If you need more, there is an API you can look at.
+You can play with this example yourself on our codesandbox: https://codesandbox.io/s/findr-text-c9juk6
+
+---
 
 </CH.Scrollycoding>

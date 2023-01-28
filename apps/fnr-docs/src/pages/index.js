@@ -16,9 +16,9 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro"
+            to="https://codesandbox.io/s/findr-text-c9juk6?file=/example.js"
           >
-            Docusaurus Tutorial - 5min ⏱️
+            Check out the playground - 🛹
           </Link>
         </div>
       </div>
