@@ -11,7 +11,11 @@
     "./packages/*",
     "./apps/*"
   ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
   "devDependencies": {
-    "nx": "14.8.6"
+    "nx": "15.6.3",
+    "@nrwl/nx-cloud": "latest"
   }
 }
