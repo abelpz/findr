@@ -1,6 +1,7 @@
 {
   "name": "@findr/pipeline",
   "version": "0.0.9",
+  "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite",
