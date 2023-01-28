@@ -16,5 +16,16 @@
   },
   "dependencies": {
     "@findr/text": "^1.x"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/@findr/pipeline/main.cjs.js",
+  "module": "./dist/@findr/pipeline/main.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/@findr/pipeline/main.es.js",
+      "require": "./dist/@findr/pipeline/main.cjs.js"
+    }
   }
 }
